@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Night Drive - Mixify</title>
+
+<style>
+body{
+  margin:0;
+  font-family:'Segoe UI',sans-serif;
+  background: linear-gradient(to bottom,#1a1a1a,#000);
+  color:white;
+}
+
+.header{
+  display:flex;
+  align-items:flex-end;
+  padding:40px;
+  background:linear-gradient(135deg,#0f2027,#203a43);
+}
+
+.cover{
+  width:200px;
+  height:200px;
+  border-radius:10px;
+  margin-right:20px;
+  object-fit:cover;
+}
+
+.info h1{
+  font-size:40px;
+  margin:0;
+}
+
+.info p{
+  color:#bbb;
+}
+
+.play-btn{
+  margin-top:10px;
+  background:#1db954;
+  border:none;
+  padding:12px 25px;
+  border-radius:30px;
+  color:black;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.container{
+  padding:20px 40px;
+}
+
+.track{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:15px;
+  border-bottom:1px solid #333;
+  cursor:pointer;
+}
+
+.track:hover{
+  background:#111;
+}
+
+.player{
+  position:fixed;
+  bottom:0;
+  width:100%;
+  background:#181818;
+  padding:10px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+button{
+  background:#1db954;
+  border:none;
+  padding:10px 15px;
+  border-radius:20px;
+  cursor:pointer;
+}
+
+.navbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:20px;
+  background:rgba(0,0,0,0.3);
+  backdrop-filter:blur(10px);
+  position:sticky;
+  top:0;
+  z-index:1000;
+}
+
+.logo{
+  font-size:24px;
+  color:#00ffd5;
+  font-weight:bold;
+}
+
+.nav-links a{
+  margin:0 10px;
+  color:#ccc;
+  text-decoration:none;
+}
+
+.nav-links a:hover{
+  color:#00ffd5;
+}
+</style>
+</head>
+
+<body>
+
+<div class="navbar">
+  <div class="logo">Mixify</div>
+  <div class="nav-links">
+    <a href="home.html">Home</a>
+    <a href="aboutus.html">About Us</a>
+    <a href="explore.html">Explore</a>
+    <a href="contact.html">Contact Us</a>
+	<a href="acc.html">Account</a>
+  <!-- LOGOUT -->
+  <a href="#" onclick="logout()" style="color:#ff4d4d;">Logout</a>
+  </div>
+</div>
+
+<!-- HEADER -->
+<div class="header">
+  <img class="cover" src="https://i1-c.pinimg.com/1200x/3e/7e/6c/3e7e6c345621217b59efd8eeb58e6e0b.jpg">
+
+  <div class="info">
+    <p>Playlist</p>
+    <h1>Midnight Motion</h1>
+    <p>Relaxing night vibes • Chill • Drive music</p>
+
+    <button class="play-btn" onclick="playSong(0)">▶ Play</button>
+  </div>
+</div>
+
+<!-- TRACK LIST (FIXED) -->
+<div class="container">
+
+  <div class="track" onclick="playSong(0)">
+    Messed Up <span>Chris Brown</span>
+  </div>
+
+  <div class="track" onclick="playSong(1)">
+    Good Flirts <span>Kendrick Lamar & Baby Keem & Momo Boyd</span>
+  </div>
+
+  <div class="track" onclick="playSong(2)">
+    Long Nights <span>6LACK</span>
+  </div>
+
+</div>
+
+<!-- PLAYER -->
+<div class="player">
+  <div id="now">Now Playing: Nothing</div>
+  <button onclick="togglePlay()" id="btn">▶</button>
+</div>
+
+<audio id="audio"></audio>
+
+<script>
+const audio = document.getElementById("audio");
+const now = document.getElementById("now");
+const btn = document.getElementById("btn");
+
+function logout() {
+  // optional: clear session data if you use it later
+  // localStorage.clear();
+
+  window.location.href = "login.html";
+}
+/* ✅ FIXED LOCAL FILE PATHS */
+const playlist = [
+  {
+    title: "Chris Brown - Messed Up",
+    src: "messed.mp3"
+  },
+  {
+    title: "Good Flirts - Kendrick Lamar & Baby Keem & Momo Boyd",
+    src: "good.mp3"
+  },
+  {
+    title: "6LACK - Long Nights",
+    src: "long.mp3"
+  }
+];
+
+let current = -1;
+
+/* PLAY SONG */
+function playSong(i){
+  current = i;
+  audio.src = playlist[i].src;
+  audio.play();
+
+  now.innerText = "Now Playing: " + playlist[i].title;
+  btn.innerText = "❚❚";
+}
+
+/* TOGGLE PLAY/PAUSE */
+function togglePlay(){
+  if(!audio.src) return;
+
+  if(audio.paused){
+    audio.play();
+    btn.innerText = "❚❚";
+  }else{
+    audio.pause();
+    btn.innerText = "▶";
+  }
+}
+</script>
+
+</body>
+</html>

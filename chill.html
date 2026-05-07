@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chill Beats - Mixify</title>
+
+<style>
+body{
+  margin:0;
+  font-family:'Segoe UI',sans-serif;
+  background: linear-gradient(to bottom,#1a1a1a,#000);
+  color:white;
+}
+
+/* HERO HEADER (Spotify style) */
+.header{
+  display:flex;
+  align-items:flex-end;
+  padding:40px;
+  background:linear-gradient(135deg,#0f2027,#203a43);
+}
+
+.cover{
+  width:200px;
+  height:200px;
+  border-radius:10px;
+  margin-right:20px;
+  object-fit:cover;
+}
+
+.info h1{
+  font-size:40px;
+  margin:0;
+}
+
+.info p{
+  color:#bbb;
+}
+
+/* PLAY BUTTON */
+.play-btn{
+  margin-top:10px;
+  background:#1db954;
+  border:none;
+  padding:12px 25px;
+  border-radius:30px;
+  color:black;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+/* TRACK LIST */
+.container{
+  padding:20px 40px;
+}
+
+.track{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:15px;
+  border-bottom:1px solid #333;
+  cursor:pointer;
+}
+
+.track:hover{
+  background:#111;
+}
+
+.track span{
+  color:#ccc;
+}
+
+/* PLAYER */
+.player{
+  position:fixed;
+  bottom:0;
+  width:100%;
+  background:#181818;
+  padding:10px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-top:1px solid #333;
+}
+
+button{
+  background:#1db954;
+  border:none;
+  padding:10px 15px;
+  border-radius:20px;
+  cursor:pointer;
+}
+.navbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:20px;
+  background:rgba(0,0,0,0.3);
+  backdrop-filter:blur(10px);
+  position:sticky;
+  top:0;
+  z-index:1000;
+}
+
+.logo{
+  font-size:24px;
+  color:#00ffd5;
+  font-weight:bold;
+}
+
+.nav-links a{
+  margin:0 10px;
+  color:#ccc;
+  text-decoration:none;
+}
+
+.nav-links a:hover{
+  color:#00ffd5;
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<div class="navbar">
+  <div class="logo">Mixify</div>
+  <div class="nav-links">
+    <a href="home.html">Home</a>
+    <a href="aboutus.html">About Us</a>
+    <a href="explore.html">Explore</a>
+    <a href="contact.html">Contact Us</a>
+	<a href="acc.html">Account</a>
+  <!-- LOGOUT -->
+  <a href="#" onclick="logout()" style="color:#ff4d4d;">Logout</a>
+  </div>
+</div>
+
+<!-- HEADER -->
+<div class="header">
+  <img class="cover" src="https://i.pinimg.com/736x/64/55/62/645562072a5955a8ac8bfb3f7a16619b.jpg">
+
+  <div class="info">
+    <p>Playlist</p>
+    <h1>Soft Hours</h1>
+    <p>Calm • Relax •Velvet vibes</p>
+
+    <button class="play-btn" onclick="playAll()">▶ Play</button>
+  </div>
+</div>
+
+<!-- TRACKS -->
+<div class="container">
+
+  <div class="track" onclick="playSong(0)">
+    Sway<span>MYMP</span>
+  </div>
+
+  <div class="track" onclick="playSong(1)">
+    20 something <span>SZA</span>
+  </div>
+
+  <div class="track" onclick="playSong(2)">
+    Officialy missing you <span>Tamia</span>
+  </div>
+
+</div>
+
+<!-- PLAYER -->
+<div class="player">
+  <div id="now">Now Playing: Nothing</div>
+  <button onclick="togglePlay()" id="btn">▶</button>
+</div>
+
+<audio id="audio"></audio>
+
+<script>
+const audio = document.getElementById("audio");
+const now = document.getElementById("now");
+const btn = document.getElementById("btn");
+
+const playlist = [
+  {
+    title:"Sway",
+    src:"sway.mp3"
+  },
+  {
+    title:"20 something",
+    src:"20.mp3"
+  },
+  {
+    title:"Officialy missing you",
+    src:"missu.mp3"
+  }
+];
+
+let index = 0;
+function logout() {
+  // optional: clear session data if you use it later
+  // localStorage.clear();
+
+  window.location.href = "login.html";
+}
+function playSong(i){
+  index = i;
+  audio.src = playlist[i].src;
+  audio.play();
+  now.innerText = "Now Playing: " + playlist[i].title;
+  btn.innerHTML = "❚❚";
+}
+
+function playAll(){
+  playSong(0);
+}
+
+function togglePlay(){
+  if(audio.paused){
+    audio.play();
+    btn.innerHTML="❚❚";
+  }else{
+    audio.pause();
+    btn.innerHTML="▶";
+  }
+}
+
+audio.addEventListener("ended",()=>{
+  index++;
+  if(index < playlist.length){
+    playSong(index);
+  }else{
+    btn.innerHTML="▶";
+  }
+});
+</script>
+
+</body>
+</html>

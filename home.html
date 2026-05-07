@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Mixify - Music Streaming</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Segoe UI', sans-serif;
+}
+
+body{
+  background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+  color:#fff;
+}
+
+/* Navbar */
+.navbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:20px;
+  background:rgba(0,0,0,0.3);
+  backdrop-filter:blur(10px);
+}
+
+.logo{
+  font-size:24px;
+  color:#00ffd5;
+  font-weight:bold;
+}
+
+.nav-links a{
+  margin:0 10px;
+  color:#ccc;
+  text-decoration:none;
+}
+
+.nav-links a:hover{
+  color:#00ffd5;
+}
+
+/* Hero */
+.hero{
+  text-align:center;
+  padding:30px 20px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+}
+
+/* Glowing MIXIFY */
+.hero h1{
+  font-size:90px;
+  font-weight:900;
+  letter-spacing:8px;
+  color:#00ffd5;
+
+  text-shadow:
+    0 0 5px #00ffd5,
+    0 0 10px #00ffd5,
+    0 0 20px #00ffd5,
+    0 0 40px #00ffd5,
+    0 0 80px #00c2a8,
+    0 0 120px #00c2a8;
+
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow{
+  from{
+    text-shadow:
+      0 0 5px #00ffd5,
+      0 0 10px #00ffd5,
+      0 0 20px #00ffd5,
+      0 0 40px #00ffd5;
+  }
+
+  to{
+    text-shadow:
+      0 0 10px #00ffd5,
+      0 0 20px #00ffd5,
+      0 0 40px #00ffd5,
+      0 0 80px #00c2a8,
+      0 0 140px #00c2a8;
+  }
+}
+
+.hero p{
+  margin-top:15px;
+  font-size:18px;
+  color:#ddd;
+}
+
+/* Search */
+.search-box input{
+  margin-top:25px;
+  padding:14px;
+  width:100%;
+  max-width:400px;
+  border-radius:30px;
+  border:none;
+  outline:none;
+  background:rgba(255,255,255,0.1);
+  color:#fff;
+  font-size:16px;
+}
+
+/* Sections */
+.section{
+  padding:30px;
+}
+
+.section h2{
+  color:#00ffd5;
+  margin-bottom:20px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:15px;
+}
+
+/* Cards */
+.card{
+  background:rgba(255,255,255,0.05);
+  border-radius:15px;
+  overflow:hidden;
+  cursor:pointer;
+  transition:0.3s;
+  position:relative;
+}
+
+.card:hover{
+  transform:scale(1.05);
+}
+
+.card.active{
+  border:2px solid #00ffd5;
+}
+
+.card img{
+  width:100%;
+  height:120px;
+  object-fit:cover;
+}
+
+.card h1{
+  font-size:18px;
+  padding:10px 10px 0;
+}
+
+.card p{
+  text-align:center;
+  padding:8px;
+}
+
+/* Player */
+.player{
+  position:fixed;
+  bottom:0;
+  width:100%;
+  background:rgba(0,0,0,0.7);
+  padding:10px;
+}
+
+.player-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+#playBtn{
+  width:45px;
+  height:45px;
+  border-radius:50%;
+  background:#00ffd5;
+  border:none;
+  font-size:18px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+}
+
+#progress{
+  width:100%;
+  margin-top:5px;
+}
+
+@media(max-width:600px){
+  .hero h1{
+    font-size:50px;
+    letter-spacing:4px;
+  }
+}
+
+/* ===================== ADMIN PANEL (ADDED) ===================== */
+
+#adminPanel{
+  position:fixed;
+  top:100px;
+  right:20px;
+  width:220px;
+  background:rgba(0,0,0,0.9);
+  border:1px solid #00ffd5;
+  border-radius:12px;
+  padding:10px;
+  z-index:9999;
+  cursor:move;
+  box-shadow:0 0 20px rgba(0,255,213,0.3);
+}
+
+#adminPanel h3{
+  font-size:14px;
+  margin-bottom:8px;
+  color:#00ffd5;
+  text-align:center;
+}
+
+#adminPanel input{
+  width:100%;
+  margin:5px 0;
+  padding:6px;
+  border:none;
+  border-radius:5px;
+  outline:none;
+}
+
+#adminPanel button{
+  width:100%;
+  margin-top:5px;
+  padding:6px;
+  border:none;
+  border-radius:5px;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+.addBtn{
+  background:#00ffd5;
+}
+
+.delBtn{
+  background:#ff4d4d;
+  color:#fff;
+}
+
+.toggleBtn{
+  background:#444;
+  color:#fff;
+  margin-bottom:5px;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- YOUR ORIGINAL CODE (UNCHANGED) -->
+<div class="navbar">
+  <div class="logo">Mixify</div>
+
+  <div class="nav-links">
+    <a href="#">Home</a>
+    <a href="aboutus.html">About Us</a>
+    <a href="explore.html">Explore</a>
+    <a href="contact.html">Contact Us</a>
+    <a href="acc.html">Account</a>
+    <a href="#" onclick="logout()" style="color:#ff4d4d;">Logout</a>
+  </div>
+</div>
+
+<div class="hero">
+  <h1>MIXIFY</h1>
+  <p>Bring out your vibe.</p>
+
+  <div class="search-box">
+    <input type="text" id="search" placeholder="Search...">
+  </div>
+</div>
+
+<div class="section">
+<h2>Trending Tracks</h2>
+
+<div class="grid">
+
+<div class="card" data-song="itdepends.mp3">
+<img src="cb1.jpg">
+<h1>It Depends</h1>
+<p>Chris Brown ft. Bryson Tiller</p>
+</div>
+
+<div class="card" data-song="nights.mp3">
+<img src="fra.jpg">
+<h1>Nights</h1>
+<p>Frank Ocean</p>
+</div>
+
+<div class="card" data-song="passion.mp3">
+<img src="dra.jpg">
+<h1>Passionfruit</h1>
+<p>Drake</p>
+</div>
+
+<div class="card" data-song="2pac.mp3">
+<img src="pac.jpg">
+<h1>Ambitionz Az a Ridah</h1>
+<p>2Pac</p>
+</div>
+
+</div>
+</div>
+
+<div class="player">
+  <div class="player-top">
+    <div id="nowPlaying">Now Playing: Nothing</div>
+    <button id="playBtn">▶</button>
+  </div>
+
+  <input type="range" id="progress" value="0">
+</div>
+
+<audio id="audio"></audio>
+
+<!-- ================= ADMIN PANEL (NEW FUNCTIONALITY) ================= -->
+
+<div id="adminPanel">
+  <h3>ADMIN PANEL</h3>
+
+  <button class="toggleBtn" onclick="togglePanel()">Toggle Tools</button>
+
+  <div id="tools" style="display:none;">
+    <input id="title" placeholder="Song Title">
+    <input id="file" placeholder="Song File">
+    <input id="img" placeholder="Image URL">
+
+    <button class="addBtn" onclick="addSong()">Add Song</button>
+    <button class="delBtn" onclick="()">Remove Song</button>
+   </div>
+   
+   <!-- SUPER ADMIN TOOLS (HIDDEN FOR NORMAL ADMIN) -->
+<div id="superTools" style="display:none; margin-top:10px; border-top:1px solid #00ffd5; padding-top:10px;">
+  <h3 style="font-size:12px; text-align:center;">SUPER ADMIN TOOLS</h3>
+
+  <button class="addBtn" onclick="clearAllSongs()">Clear All Songs</button>
+  <button class="delBtn" onclick="removeSelectedSong()">Delete Selected</button>
+</div>
+</div>
+
+<script>
+
+const audio = document.getElementById("audio");
+const playBtn = document.getElementById("playBtn");
+const nowPlaying = document.getElementById("nowPlaying");
+const progress = document.getElementById("progress");
+const role = localStorage.getItem("role");
+const loggedIn = localStorage.getItem("loggedIn");
+
+if (loggedIn !== "true") {
+  window.location.href = "login.html";
+}
+
+/* ADMIN + SUPER ADMIN ACCESS CONTROL */
+if (role === "admin" || role === "superadmin") {
+  document.getElementById("adminPanel").style.display = "block";
+} else {
+  document.getElementById("adminPanel").style.display = "none";
+}
+
+/* SUPER ADMIN EXTRA FEATURES */
+if (role === "superadmin") {
+  document.getElementById("superTools").style.display = "block";
+}
+/* logout */
+function logout(){
+  window.location.href = "login.html";
+}
+
+/* existing player logic unchanged */
+document.querySelectorAll(".card").forEach(card=>{
+  card.addEventListener("click",()=>{
+    document.querySelectorAll(".card").forEach(c=>c.classList.remove("active"));
+    card.classList.add("active");
+
+    const song = card.dataset.song;
+    const title = card.querySelector("h1").innerText;
+
+    audio.src = song;
+    audio.play();
+
+    nowPlaying.innerText = "Now Playing: " + title;
+    playBtn.innerHTML = "❚❚";
+  });
+});
+
+playBtn.addEventListener("click",()=>{
+  if(audio.paused){
+    audio.play();
+    playBtn.innerHTML = "❚❚";
+  }else{
+    audio.pause();
+    playBtn.innerHTML = "▶";
+  }
+});
+
+/* search */
+document.getElementById("search").addEventListener("input",(e)=>{
+  const val = e.target.value.toLowerCase();
+
+  document.querySelectorAll(".card").forEach(card=>{
+    card.style.display = card.innerText.toLowerCase().includes(val)
+    ? "block":"none";
+  });
+});
+
+/* ================= ADMIN FUNCTIONS ================= */
+
+function togglePanel(){
+  const tools = document.getElementById("tools");
+  tools.style.display = tools.style.display === "block" ? "none" : "block";
+}
+
+function addSong(){
+  const title = document.getElementById("title").value;
+  const file = document.getElementById("file").value;
+  const img = document.getElementById("img").value;
+
+  const card = document.createElement("div");
+  card.className = "card";
+  card.setAttribute("data-song", file);
+
+  card.innerHTML = `
+    <img src="${img}">
+    <h1>${title}</h1>
+    <p>Custom Upload</p>
+  `;
+
+  document.querySelector(".grid").appendChild(card);
+}
+
+/* remove last song */
+function removeSong(){
+  const grid = document.querySelector(".grid");
+  const cards = grid.querySelectorAll(".card");
+  if(cards.length > 0){
+    grid.removeChild(cards[cards.length - 1]);
+  }
+}
+/* ================= SUPER ADMIN FUNCTIONS ================= */
+
+// delete specific selected song (click card first)
+let selectedCard = null;
+
+document.querySelectorAll(".card").forEach(card=>{
+  card.addEventListener("click", ()=>{
+    selectedCard = card;
+  });
+});
+
+function removeSelectedSong(){
+  if(role !== "superadmin"){
+    alert("Only Super Admin can delete selected songs!");
+    return;
+  }
+
+  if(selectedCard){
+    selectedCard.remove();
+    selectedCard = null;
+  } else {
+    alert("No song selected!");
+  }
+}
+
+function clearAllSongs(){
+  if(role !== "superadmin"){
+    alert("Only Super Admin can clear all songs!");
+    return;
+  }
+
+  document.querySelectorAll(".card").forEach(card => card.remove());
+}
+
+/* ================= DRAGGABLE ADMIN PANEL ================= */
+
+const panel = document.getElementById("adminPanel");
+
+let isDragging = false;
+let offsetX, offsetY;
+
+panel.addEventListener("mousedown",(e)=>{
+  isDragging = true;
+  offsetX = e.clientX - panel.offsetLeft;
+  offsetY = e.clientY - panel.offsetTop;
+});
+
+document.addEventListener("mousemove",(e)=>{
+  if(isDragging){
+    panel.style.left = (e.clientX - offsetX) + "px";
+    panel.style.top = (e.clientY - offsetY) + "px";
+  }
+});
+
+document.addEventListener("mouseup",()=>{
+  isDragging = false;
+});
+
+</script>
+
+</body>
+</html>

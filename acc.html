@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Account - Mixify</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Segoe UI',sans-serif;
+}
+
+body{
+  background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+  color:white;
+  min-height:100vh;
+}
+
+/* NAVBAR */
+.navbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:20px;
+  background:rgba(0,0,0,0.3);
+  backdrop-filter:blur(10px);
+}
+
+.logo{
+  font-size:28px;
+  font-weight:bold;
+  color:#00ffd5;
+}
+
+.nav-links a{
+  color:#ccc;
+  text-decoration:none;
+  margin-left:20px;
+  transition:.3s;
+}
+
+.nav-links a:hover{
+  color:#00ffd5;
+}
+
+/* ACCOUNT SECTION */
+.account-container{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:60px 20px;
+}
+
+.account-box{
+  width:100%;
+  max-width:500px;
+  background:rgba(255,255,255,0.05);
+  padding:40px;
+  border-radius:20px;
+  backdrop-filter:blur(10px);
+  box-shadow:0 10px 30px rgba(0,0,0,0.3);
+  text-align:center;
+}
+
+/* PROFILE IMAGE */
+.profile-img{
+  width:120px;
+  height:120px;
+  border-radius:50%;
+  object-fit:cover;
+  border:4px solid #00ffd5;
+  margin-bottom:20px;
+}
+
+/* TITLE */
+.account-box h1{
+  margin-bottom:10px;
+  color:#00ffd5;
+}
+
+/* INFO */
+.info{
+  margin-top:30px;
+  text-align:left;
+}
+
+.info label{
+  display:block;
+  margin-bottom:8px;
+  color:#bbb;
+  font-size:14px;
+}
+
+.info input{
+  width:100%;
+  padding:14px;
+  margin-bottom:20px;
+  border:none;
+  border-radius:12px;
+  background:rgba(255,255,255,0.08);
+  color:white;
+  font-size:16px;
+  outline:none;
+}
+
+/* BUTTON */
+button{
+  width:100%;
+  padding:15px;
+  border:none;
+  border-radius:30px;
+  background:#00ffd5;
+  color:black;
+  font-weight:bold;
+  cursor:pointer;
+  transition:.3s;
+  font-size:16px;
+}
+
+button:hover{
+  background:#00c2a8;
+  transform:scale(1.03);
+}
+
+/* MOBILE */
+@media(max-width:600px){
+  .navbar{
+    flex-direction:column;
+    gap:15px;
+  }
+
+  .account-box{
+    padding:25px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+  <div class="logo">Mixify</div>
+
+  <div class="nav-links">
+    <a href="home.html">Home</a>
+    <a href="aboutus.html">About Us</a>
+    <a href="explore.html">Explore</a>
+    <a href="contact.html">Contact Us</a>
+    <a href="acc.html">Account</a>
+
+    <!-- LOGOUT -->
+    <a href="#" onclick="logout()" style="color:#ff4d4d;">Logout</a>
+  </div>
+</div>
+
+<!-- ACCOUNT -->
+<div class="account-container">
+
+  <div class="account-box">
+
+    <img class="profile-img" src="https://i.pravatar.cc/300" alt="Profile">
+
+    <h1>My Account</h1>
+    <p>Manage your Mixify profile</p>
+
+    <div class="info">
+
+      <label>Username</label>
+      <input type="text" value="mixify_user">
+
+      <label>Email</label>
+      <input type="email" value="user@email.com">
+
+      <label>Password</label>
+      <input type="password" value="password123">
+
+      <button>Save Changes</button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- LOGOUT SCRIPT -->
+<script>
+function logout() {
+  // optional: clear session data
+  // localStorage.clear();
+
+  window.location.href = "login.html";
+}
+</script>
+
+</body>
+</html>

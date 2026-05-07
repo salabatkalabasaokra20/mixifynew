@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Explore - Mixify</title>
+
+<style>
+body{
+  margin:0;
+  font-family:'Segoe UI',sans-serif;
+  background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+  color:white;
+}
+
+/* NAVBAR */
+.navbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:20px;
+  background:rgba(0,0,0,0.3);
+  backdrop-filter:blur(10px);
+  position:sticky;
+  top:0;
+}
+
+.logo{
+  color:#00ffd5;
+  font-weight:bold;
+}
+
+.nav-links a{
+  margin:0 10px;
+  color:#ccc;
+  text-decoration:none;
+}
+
+.nav-links a:hover{
+  color:#00ffd5;
+}
+
+/* TITLE */
+.header{
+  padding:40px;
+}
+
+.header h1{
+  font-size:40px;
+}
+
+/* GRID */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:20px;
+  padding:0 40px 40px;
+}
+
+/* CARD */
+.card{
+  background:rgba(255,255,255,0.08);
+  border-radius:15px;
+  overflow:hidden;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.card:hover{
+  transform:scale(1.05);
+}
+
+.card img{
+  width:100%;
+  height:140px;
+  object-fit:cover;
+}
+
+.card p{
+  text-align:center;
+  padding:10px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+  <div class="logo">Mixify</div>
+  <div class="nav-links">
+    <a href="home.html">Home</a>
+    <a href="aboutus.html">About Us</a>
+	<a href="explore.html">Explore</a>
+    <a href="contact.html">Contact Us</a>
+	<a href="acc.html">Account</a>
+	<!-- LOGOUT -->
+  <a href="#" onclick="logout()" style="color:#ff4d4d;">Logout</a>
+  </div>
+</div>
+
+<!-- HEADER -->
+<div class="header">
+  <h1>Explore</h1>
+  <p>Discover new vibes and playlists</p>
+</div>
+
+<!-- PLAYLIST GRID -->
+<div class="grid">
+
+  <div class="card" onclick="window.location.href='play1.html'">
+    <img src="https://i1-c.pinimg.com/1200x/3e/7e/6c/3e7e6c345621217b59efd8eeb58e6e0b.jpg">
+    <p>Night Drive</p>
+  </div>
+
+  <div class="card" onclick="window.location.href='chill.html'">
+    <img src="https://i.pinimg.com/736x/64/55/62/645562072a5955a8ac8bfb3f7a16619b.jpg">
+    <p>Chill Beats</p>
+  </div>
+
+  <div class="card" onclick="window.location.href='pop.html'">
+    <img src="https://i1-c.pinimg.com/1200x/93/cf/db/93cfdbcf30739b0cc3004d68292bc909.jpg">
+    <p>Pop Hits</p>
+  </div>
+
+  <div class="card" onclick="window.location.href='focus.html'">
+    <img src="https://i.pinimg.com/736x/6c/e0/5f/6ce05fc21f0dceaf4a939831f4872a83.jpg">
+    <p>Focus Flow</p>
+  </div>
+
+</div>
+
+<script>
+function go(page){
+  window.location.href = page;
+}
+function logout() {
+  // optional: clear session data if you use it later
+  // localStorage.clear();
+
+  window.location.href = "login.html";
+}
+</script>
+
+</body>
+</html>
