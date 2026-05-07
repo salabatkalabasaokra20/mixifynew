@@ -1,0 +1,391 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* Background image */
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background:
+        linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+        url("<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mixify - Login / Sign Up</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Segoe UI', sans-serif;
+}
+
+body{
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  position:relative;
+  color:#fff;
+  background-image: url("https://gemini.google.com/3280b4cf-8147-4a20-b01e-952180bfff8d");
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+}
+
+/* dark overlay */
+body::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.6);
+  z-index:0;
+}
+
+/* make container appear above overlay */
+.container{
+  position:relative;
+  z-index:1;
+  width:360px;
+  background:rgba(255,255,255,0.06);
+  backdrop-filter:blur(15px);
+  border-radius:15px;
+  padding:30px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.3);
+}
+
+.logo{
+  text-align:center;
+  font-size:28px;
+  font-weight:bold;
+  color:#00ffd5;
+  margin-bottom:10px;
+}
+
+.toggle{
+  display:flex;
+  justify-content:space-between;
+  margin:20px 0;
+  background:rgba(0,0,0,0.2);
+  border-radius:25px;
+  overflow:hidden;
+}
+
+.toggle button{
+  flex:1;
+  padding:10px;
+  border:none;
+  cursor:pointer;
+  background:transparent;
+  color:#ccc;
+  font-weight:bold;
+}
+
+.toggle button.active{
+  background:#00ffd5;
+  color:#000;
+}
+
+form{
+  display:none;
+  flex-direction:column;
+  gap:12px;
+}
+
+form.active{
+  display:flex;
+}
+
+input,
+select{
+  padding:12px;
+  border:none;
+  border-radius:8px;
+  outline:none;
+}
+
+select{
+  background:#fff;
+  color:#000;
+}
+
+button.submit{
+  margin-top:10px;
+  padding:12px;
+  border:none;
+  border-radius:8px;
+  background:#00ffd5;
+  font-weight:bold;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+button.submit:hover{
+  background:#00c2a8;
+}
+
+.small{
+  text-align:center;
+  font-size:12px;
+  color:#ccc;
+  margin-top:10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="logo">Mixify</div>
+
+  <div class="toggle">
+    <button id="loginBtn" class="active" onclick="showLogin()">
+      Login
+    </button>
+
+    <button id="signupBtn" onclick="showSignup()">
+      Sign Up
+    </button>
+  </div>
+
+  <!-- LOGIN FORM -->
+  <form id="loginForm" class="active">
+
+    <input type="text" placeholder="Username" required />
+
+    <input type="password" placeholder="Password" required />
+
+    <!-- ROLE SELECT -->
+    <select id="loginRole" required>
+      <option value="">Select Role</option>
+      <option value="Listener">Listener</option>
+      <option value="Admin">Admin</option>
+      <option value="Super Admin">Super Admin</option>
+    </select>
+
+    <button class="submit" type="button" onclick="loginUser()">
+      Login
+    </button>
+
+  </form>
+
+  <!-- SIGNUP FORM -->
+  <form id="signupForm">
+
+    <input type="text" placeholder="Username" required />
+
+    <input type="email" placeholder="Email" required />
+
+    <input type="password" placeholder="Password" required />
+
+    <button class="submit" type="button" onclick="signupUser()">
+      Create Account
+    </button>
+
+  </form>
+
+  <div class="small">Bring out your vibe</div>
+
+</div>
+
+<script>
+
+function showLogin(){
+  document.getElementById('loginForm').classList.add('active');
+  document.getElementById('signupForm').classList.remove('active');
+
+  document.getElementById('loginBtn').classList.add('active');
+  document.getElementById('signupBtn').classList.remove('active');
+}
+
+function showSignup(){
+  document.getElementById('signupForm').classList.add('active');
+  document.getElementById('loginForm').classList.remove('active');
+
+  document.getElementById('signupBtn').classList.add('active');
+  document.getElementById('loginBtn').classList.remove('active');
+}
+
+function signupUser(){
+
+  const username =
+    document.querySelector('#signupForm input[type="text"]').value;
+
+  const email =
+    document.querySelector('#signupForm input[type="email"]').value;
+
+  const password =
+    document.querySelector('#signupForm input[type="password"]').value;
+
+  if(username && email && password){
+
+    localStorage.setItem(
+      'mixifyUser',
+      JSON.stringify({
+        username,
+        email,
+        password
+      })
+    );
+
+    alert('Account created successfully! Please login.');
+
+    showLogin();
+  }
+}
+
+function loginUser(){
+
+  const username =
+    document.querySelector('#loginForm input[type="text"]').value;
+
+  const password =
+    document.querySelector('#loginForm input[type="password"]').value;
+
+  const role =
+    document.getElementById('loginRole').value;
+
+  const savedUser =
+    JSON.parse(localStorage.getItem('mixifyUser'));
+
+  if(savedUser &&
+     username === savedUser.username &&
+     password === savedUser.password){
+
+    alert(`Logged in as ${role}! Redirecting...`);
+
+    if(role === "Listener"){
+      window.location.href = "home.html";
+    }
+
+    else if(role === "Admin"){
+      window.location.href = "admin.html";
+    }
+
+    else if(role === "Super Admin"){
+      window.location.href = "superadmin.html";
+    }
+
+  }else{
+    alert('Invalid credentials');
+  }
+}
+
+</script>
+
+</body>
+</html>");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* DARK LOGIN BOX */
+.container {
+    width: 350px;
+    background: rgba(0, 0, 0, 0.75);
+    padding: 25px;
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+    color: #fff;
+}
+
+/* 🔥 LOGIN TITLE WITH GLOW EFFECT */
+.old-english {
+    font-family: 'UnifrakturCook', cursive;
+    font-size: 34px;
+    color: #fff;
+    letter-spacing: 3px;
+    text-align: center;
+
+    animation: loginGlow 2s infinite alternate;
+}
+
+/* ✨ Glow animation */
+@keyframes loginGlow {
+    0% {
+        text-shadow:
+        0 0 5px #ffffff,
+        0 0 10px #666,
+        0 0 20px #333;
+    }
+
+    100% {
+        text-shadow:
+        0 0 10px #ffffff,
+        0 0 25px #999,
+        0 0 45px #ffffff,
+        0 0 60px #ccc;
+    }
+}
+
+/* Inputs */
+.input-group {
+    margin-bottom: 15px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #444;
+    border-radius: 6px;
+    background: #1a1a1a;
+    color: #fff;
+}
+
+.input-group input::placeholder {
+    color: #aaa;
+}
+
+/* Button */
+button {
+    width: 100%;
+    padding: 10px;
+    background: #222;
+    border: none;
+    color: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #555;
+}
+
+/* Toggle text */
+.toggle {
+    text-align: center;
+    margin-top: 10px;
+    cursor: pointer;
+    color: #ccc;
+}
+
+.toggle:hover {
+    color: #fff;
+}
+
+/* Form switching */
+.form {
+    display: none;
+}
+
+.active {
+    display: block;
+}
